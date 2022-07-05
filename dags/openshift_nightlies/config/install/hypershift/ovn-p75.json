@@ -15,6 +15,6 @@
     "hosted_cluster_instance_type": "m5.2xlarge",
     "hosted_cluster_network_type": "OVNKubernetes", 
     "hosted_control_plane_availability": "HighlyAvailable",
-    "hosted_cluster_release_image": "registry.ci.openshift.org/ocp/release:4.11.0-0.nightly-2022-06-25-081133",
-    "rosa_expiration_time": "2880"
+    "hosted_cluster_release_image": "registry.ci.openshift.org/ocp/release:4.11.0-0.nightly-2022-06-30-005428",
+    "rosa_expiration_time": "5760"
  }
