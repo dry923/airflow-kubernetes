@@ -103,12 +103,16 @@ setup(){
 }
 
 install(){
-    export HYPERSHIFT_OPERATOR_VERSION=$(cat ${json_file} | jq -r .hypershift_operator_version)
+    export HYPERSHIFT_OPERATOR_IMAGE=$(cat ${json_file} | jq -r .hypershift_operator_image)
+    HO_IMAGE_ARG=""
+    if [[ $HYPERSHIFT_OPERATOR_IMAGE != "" ]]; then
+	    HO_IMAGE_ARG="--hypershift-image $HYPERSHIFT_OPERATOR_IMAGE"
+    fi
     echo "Create S3 bucket.."
     aws s3api create-bucket --acl public-read --bucket $MGMT_CLUSTER_NAME-aws-rhperfscale-org --create-bucket-configuration LocationConstraint=$AWS_REGION --region $AWS_REGION || true
     echo "Wait till S3 bucket is ready.."
     aws s3api wait bucket-exists --bucket $MGMT_CLUSTER_NAME-aws-rhperfscale-org 
-    hypershift install --hypershift-image $HYPERSHIFT_OPERATOR_VERSION  --oidc-storage-provider-s3-bucket-name $MGMT_CLUSTER_NAME-aws-rhperfscale-org --oidc-storage-provider-s3-credentials aws_credentials --oidc-storage-provider-s3-region $AWS_REGION  --enable-ocp-cluster-monitoring --metrics-set=All
+    hypershift install $HO_IMAGE_ARG  --oidc-storage-provider-s3-bucket-name $MGMT_CLUSTER_NAME-aws-rhperfscale-org --oidc-storage-provider-s3-credentials aws_credentials --oidc-storage-provider-s3-region $AWS_REGION  --enable-ocp-cluster-monitoring --metrics-set=All
     echo "Wait till Operator is ready.."
     cm=""
     while [[ $cm != "oidc-storage-provider-s3-config" ]]
