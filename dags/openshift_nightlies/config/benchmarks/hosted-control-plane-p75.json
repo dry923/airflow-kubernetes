@@ -14,11 +14,12 @@
                 "METRICS_PROFILE": "metrics-profiles/hypershift-metrics.yaml",
                 "QPS": "20",
                 "BURST": "20",
-                "LOG_LEVEL": "info",
+                "LOG_LEVEL": "debug",
                 "PLATFORM_ALERTS": "false",
-                "CLEANUP_WHEN_FINISH": "true",
+                "CLEANUP_WHEN_FINISH": "false",
                 "CLEANUP": "true",
-                "MUST_GATHER_EACH_TASK": "false"
+                "MUST_GATHER_EACH_TASK": "false",
+		"KUBE_BURNER_IMAGE": "quay.io/rsevilla/kube-burner:prom-wait-fix"
             }
         }
     ]
